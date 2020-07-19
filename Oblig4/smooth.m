@@ -1,0 +1,9 @@
+function y = smooth(y)
+x = y;
+order = 4;
+framelen = 21;
+b = sgolay(order,framelen);
+ycenter = conv(x,b((framelen+1)/2,:),'valid');
+ybegin = b(end:-1:(framelen+3)/2,:) * x(framelen:-1:1);
+yend = b((framelen-1)/2:-1:1,:) * x(end:-1:end-(framelen-1));
+y = [ybegin; ycenter; yend];
